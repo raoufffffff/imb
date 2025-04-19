@@ -29,7 +29,7 @@ const MinLinks = ({ setShow }: MinLinksProps) => {
     const mylinks = links.map((e: LinkItem, i: number) => (
         <div key={i} className="relative group px-3 border-b-2 border-b-[#f7f7f7]">
             <Link
-                className={`flex items-center my-3 hover:text-primary transition-colors font-bold text-[#0a5da6] duration-200`}
+                className={`flex items-center my-3 hover:text-primary transition-colors font-bold text-[#1b3d4e] duration-200`}
                 to={e.to}
                 onClick={(event: React.MouseEvent) => {
                     if (e.type) {
@@ -63,7 +63,7 @@ const MinLinks = ({ setShow }: MinLinksProps) => {
                         {e.links.map((subLink, subIndex: number) => (
                             <Link
                                 key={subIndex}
-                                className='flex items-center my-3 hover:text-primary transition-colors font-bold text-[#0a5da6]'
+                                className='flex items-center my-3 hover:text-primary transition-colors font-bold text-[#1b3d4e]'
                                 to={subLink.to}
                                 onClick={() => setShow(false)}
                             >
@@ -87,7 +87,7 @@ const MinLinks = ({ setShow }: MinLinksProps) => {
             <nav className='mx-auto flex flex-col w-11/12 justify-center bg-white rounded-lg overflow-hidden'>
                 {mylinks}
                 <Link
-                    className='flex items-center px-3 my-3 hover:text-primary transition-colors font-bold text-[#0a5da6] duration-200'
+                    className='flex items-center px-3 my-3 hover:text-primary transition-colors font-bold text-[#1b3d4e] duration-200'
                     to={'/log'}
                     onClick={() => setShow(false)}
                 >
@@ -107,7 +107,7 @@ const MdLinks = () => {
             initial="rest"
         >
             <Link
-                className={`mx-2 py-2 px-1 flex items-center hover:text-[#0a5da6] transition-colors duration-200 ${e.type ? "group" : ""
+                className={`mx-2 py-2 px-1 flex items-center hover:text-[#1b3d4e] transition-colors duration-200 ${e.type ? "group" : ""
                     }`}
                 to={e.to}
             >
@@ -138,7 +138,7 @@ const MdLinks = () => {
                     {e.links.map((subLink, subIndex: number) => (
                         <Link
                             key={subIndex}
-                            className='block px-4 py-2 text-sm text-gray-700 hover:text-white hover:bg-[#0a5da6] transition-colors'
+                            className='block px-4 py-2 text-sm text-gray-700 hover:text-white hover:bg-[#1b3d4e] transition-colors'
                             to={subLink.to}
                         >
                             <motion.div
@@ -184,7 +184,7 @@ const Header = () => {
                 className='hidden sm:block'
             >
                 <Link
-                    className='hover:border-[#0a5da6] hover:border hover:text-[#0a5da6] hover:bg-white bg-[#0a5da6] text-white px-4 py-2 rounded-md transition-colors duration-200'
+                    className='hover:border-[#1b3d4e] hover:border hover:text-[#1b3d4e] hover:bg-white bg-[#1b3d4e] text-white px-4 py-2 rounded-md transition-colors duration-200'
                     to={'/log'}
                 >
                     تسجيل الدخول
@@ -198,7 +198,7 @@ const Header = () => {
             <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className='sm:hidden text-[#0a5da6] p-2'
+                className='sm:hidden text-[#1b3d4e] p-2'
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
                 aria-label="Toggle menu"
             >
