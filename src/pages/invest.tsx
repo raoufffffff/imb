@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import data from "../data";
 import Titel from "../computent/Titel";
 import ProjectCard from "../computent/ProjectCard";
 import { useSearchParams } from "react-router-dom";
+import { properties } from "../data";
 
 const Invest = () => {
     const [searchparams] = useSearchParams();
     const [type, setType] = useState(searchparams.get('type') || "الكل");
-
-    let filteredData = data;
+    useEffect(() => {
+        window.scrollTo({
+            behavior: "smooth",
+            top: 0
+        })
+    }, [])
+    let filteredData = properties;
     if (type !== "الكل") {
-        filteredData = data.filter(e => e.type === type);
+        filteredData = properties.filter(e => e.type === type);
     }
 
     return (

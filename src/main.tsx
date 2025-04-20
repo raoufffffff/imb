@@ -8,6 +8,7 @@ import About from './pages/about.tsx';
 import Login from './pages/login.tsx';
 import Signin from './pages/sinin.tsx';
 import Invest from './pages/invest.tsx';
+import InvestType from './pages/investType.tsx';
 
 
 const router = createBrowserRouter(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route path='/log' element={<Login />} />
       <Route path='/sin' element={<Signin />} />
       <Route path='/invest' element={<Invest />} />
+      <Route path='/investtype/:id' element={<InvestType />} />
     </Route>
   )
 );

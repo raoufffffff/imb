@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 
@@ -35,6 +35,13 @@ const Signin = () => {
         console.log(formData);
         navigate("/log");
     };
+
+    useEffect(() => {
+        window.scrollTo({
+            behavior: "smooth",
+            top: 0
+        })
+    }, [])
 
     return (
         <div className="min-h-screen flex justify-center">

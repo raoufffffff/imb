@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 
@@ -19,7 +19,12 @@ const Login = () => {
         // Add your Google login logic here (e.g., Firebase or OAuth)
         alert("جاري تسجيل الدخول بجوجل...");
     };
-
+    useEffect(() => {
+        window.scrollTo({
+            behavior: "smooth",
+            top: 0
+        })
+    }, [])
     return (
         <div className="min-h-screen flex justify-center">
             <div className="w-full max-w-md bg-white rounded-xl shadow-lg sm:shadow-none p-6">

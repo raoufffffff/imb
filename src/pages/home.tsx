@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Advantages from "../computent/home/Advantages";
 import BoostYourMoney from "../computent/home/BoostYourMoney";
 import Hero from "../computent/home/Hero";
@@ -5,6 +6,12 @@ import InvestmentCards from "../computent/home/InvestmentTypes ";
 
 
 export default function Home() {
+  useEffect(() => {
+    window.scrollTo({
+      behavior: "smooth",
+      top: 0
+    })
+  }, [])
   return (
     <main
       className="w-full from-[#f0f8ff] to-[#e1f5fe] "

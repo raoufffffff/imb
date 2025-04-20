@@ -39,7 +39,7 @@ const investmentTypes = [
 
 const InvestmentCards = () => {
     return (
-        <div className="w-full px-4 py-10 bg-gradient-to-b ">
+        <div className="w-full  px-4 py-10 bg-gradient-to-b ">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -79,10 +79,10 @@ const InvestmentCards = () => {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 whileHover={{ y: -10 }}
                                 transition={{ duration: 0.3 }}
-                                className="relative bg-white rounded-xl shadow-xl overflow-hidden h-96 flex flex-col"
+                                className="relative bg-white rounded-xl shadow-xl overflow-hidden h-fit flex flex-col"
                             >
                                 <Link
-                                    to={`/invest/?type=${type.title}`}
+                                    to={`/investtype/${type.title}`}
                                 >
 
                                     <div className="relative h-1/2 overflow-hidden">
