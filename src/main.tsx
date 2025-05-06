@@ -9,6 +9,9 @@ import Login from './pages/login.tsx';
 import Signin from './pages/sinin.tsx';
 import Invest from './pages/invest.tsx';
 import InvestType from './pages/investType.tsx';
+import Dashboard from './pages/Dashboard.tsx';
+import Confirm from './pages/Confirm.tsx';
+import ForgotPassword from './pages/ForgotPassword.tsx';
 
 
 const router = createBrowserRouter(
@@ -19,6 +22,9 @@ const router = createBrowserRouter(
       <Route path='/log' element={<Login />} />
       <Route path='/sin' element={<Signin />} />
       <Route path='/invest' element={<Invest />} />
+      <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/confirm/:id' element={<Confirm />} />
+      <Route path='/forgotPassword' element={<ForgotPassword />} />
       <Route path='/investtype/:id' element={<InvestType />} />
     </Route>
   )

@@ -38,7 +38,7 @@ const Hero = () => {
                     </Link>
                     <Link
                         className="border border-[#1b3d4e] hover:bg-[#1b3d4e] transition-colors text-white font-semibold rounded-xl w-[160px] py-3 text-center"
-                        to="/"
+                        to="/log"
                     >
                         اطلب التمويل
                     </Link>
