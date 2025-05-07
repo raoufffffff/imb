@@ -1,21 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { motion } from "framer-motion";
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { FiMail, FiKey, FiCheckCircle } from "react-icons/fi";
 
 const ForgotPassword = () => {
     const [step, setStep] = useState(1); // 1: email, 2: code, 3: new password
     const [email, setEmail] = useState("");
+    const [id, setid] = useState("");
     const [code, setCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [searchparams] = useSearchParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const idParam = searchparams.get('id');
+        if (idParam) {
+            setid(idParam);
+            setStep(3);
+        }
+    }, [searchparams]);
+
 
     const handleEmailSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.put(`https://imb-api.vercel.app/user/newone`, { email });
-            toast.success("تم إرسال رمز إلى بريدك الإلكتروني");
-            setStep(2);
+            const res = await axios.put(`https://imb-api.vercel.app/user/email/password`, { email });
+            if (res.data.status) {
+                toast.success("تم إرسال رمز إلى بريدك الإلكتروني");
+                setid(res.data.id);
+                setStep(2);
+            } else {
+                toast.warning(res.data.message);
+            }
         } catch {
             toast.error("فشل إرسال الرمز، تحقق من البريد الإلكتروني");
         }
@@ -24,7 +43,7 @@ const ForgotPassword = () => {
     const handleCodeSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const res = await axios.get(`https://imb-api.vercel.app/user/email/${email}`);
+            const res = await axios.get(`https://imb-api.vercel.app/user/${id}`);
             if (res.data.status && res.data.data.code === code) {
                 toast.success("تم التحقق من الرمز");
                 setStep(3);
@@ -39,11 +58,17 @@ const ForgotPassword = () => {
     const handlePasswordReset = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.put(`https://imb-api.vercel.app/user/reset-password`, {
-                email,
-                newPassword,
-            });
-            toast.success("تم تحديث كلمة المرور بنجاح");
+            await axios.put(`https://imb-api.vercel.app/user/${id}`, { password: newPassword })
+                .then(res => {
+                    if (res.data.status) {
+                        toast.success("تم تحديث كلمة المرور بنجاح");
+                        localStorage.setItem("user", JSON.stringify(res.data.data))
+                        setTimeout(() => navigate("/dashboard"), 1000);
+                        return
+                    }
+                    toast.error("حدث خطأ أثناء");
+
+                })
             setStep(1);
             setEmail("");
             setCode("");
@@ -52,6 +77,12 @@ const ForgotPassword = () => {
             toast.error("فشل تحديث كلمة المرور");
         }
     };
+
+    const steps = [
+        { title: "إرسال البريد", icon: <FiMail size={24} />, active: step === 1 },
+        { title: "التحقق من الرمز", icon: <FiCheckCircle size={24} />, active: step === 2 },
+        { title: "كلمة مرور جديدة", icon: <FiKey size={24} />, active: step === 3 },
+    ];
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 text-right">
@@ -62,6 +93,24 @@ const ForgotPassword = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
+                {/* الخط الزمني للخطوات */}
+                <div className="flex justify-between mb-6">
+                    {steps.map((s, idx) => (
+                        <div key={idx} className={`flex flex-col items-center text-sm ${s.active ? 'text-[#0a5da6]' : 'text-gray-400'}`}>
+                            <div className={`mb-1 p-2 rounded-full ${s.active ? 'bg-[#0a5da6] text-white' : 'bg-gray-200'}`}>
+                                {s.icon}
+                            </div>
+                            {s.title}
+                        </div>
+                    ))}
+                </div>
+
+                {/* عرض البريد الحالي إذا كان موجودًا */}
+                {email && step !== 1 && (
+                    <p className="text-sm text-gray-500 mb-2 text-center">البريد: <span className="font-semibold">{email}</span></p>
+                )}
+
+                {/* النموذج حسب المرحلة */}
                 {step === 1 && (
                     <form onSubmit={handleEmailSubmit} className="space-y-4">
                         <h2 className="text-xl font-bold text-[#0a5da6]">نسيت كلمة المرور</h2>
@@ -74,7 +123,7 @@ const ForgotPassword = () => {
                             required
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none"
                         />
-                        <button type="submit" className="w-full bg-[#0a5da6] text-white py-2 rounded-lg">
+                        <button type="submit" className="w-full bg-[#0a5da6] text-white py-2 rounded-lg hover:bg-[#084d8c] transition">
                             إرسال الرمز
                         </button>
                     </form>
@@ -92,7 +141,7 @@ const ForgotPassword = () => {
                             required
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none"
                         />
-                        <button type="submit" className="w-full bg-[#0a5da6] text-white py-2 rounded-lg">
+                        <button type="submit" className="w-full bg-[#0a5da6] text-white py-2 rounded-lg hover:bg-[#084d8c] transition">
                             تحقق
                         </button>
                     </form>
@@ -109,7 +158,7 @@ const ForgotPassword = () => {
                             required
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none"
                         />
-                        <button type="submit" className="w-full bg-green-600 text-white py-2 rounded-lg">
+                        <button type="submit" className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
                             تحديث كلمة المرور
                         </button>
                     </form>

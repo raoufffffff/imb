@@ -62,7 +62,7 @@ const Signin = () => {
                     navigate(`/confirm/${res.data.data._id}`);
                 }, 1000);
             } else {
-                toast.error("حدث خطأ أثناء إنشاء الحساب");
+                toast.error(res.data.message);
             }
         } catch (error) {
             console.log(error);

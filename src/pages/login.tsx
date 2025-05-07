@@ -39,7 +39,12 @@ const Login = () => {
             if (res.data.status) {
                 toast.success("تم تسجيل الدخول بنجاح");
                 setTimeout(() => {
-                    navigate("/dashboard");
+                    if (res.data.data.isConfirm) {
+                        navigate("/dashboard");
+                        localStorage.setItem("user", JSON.stringify(res.data.data))
+                    } else {
+                        navigate(`/confirm/${res.data.data._id}`);
+                    }
                 }, 1000);
             } else {
                 toast.error("بيانات الدخول غير صحيحة");

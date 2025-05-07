@@ -60,7 +60,7 @@ const Confirm = () => {
     // إرسال رمز جديد
     const handleResend = async () => {
         try {
-            await axios.put(`https://imb-api.vercel.app/user/newone`, {
+            await axios.put(`https://imb-api.vercel.app/user/email/newsend`, {
                 email: user?.email,
             });
             toast.success("تم إرسال رمز جديد إلى بريدك الإلكتروني");
@@ -82,12 +82,16 @@ const Confirm = () => {
 
         if (user?.code === code) {
             toast.success("تم التحقق بنجاح");
+            confiruser()
+            localStorage.setItem("user", JSON.stringify(user))
             setTimeout(() => navigate("/dashboard"), 1000);
         } else {
             toast.error("الرمز غير صحيح");
         }
     };
-
+    const confiruser = async () => {
+        await axios.put(`https://imb-api.vercel.app/user/${id}`, { isConfirm: true })
+    }
     if (loading) return <div className="text-center p-10">جاري التحميل...</div>;
     if (err) return <div className="text-center p-10 text-red-600">حدث خطأ في تحميل البيانات</div>;
 
